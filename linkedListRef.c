@@ -7,8 +7,19 @@
  * Return -1 if memory allocation fails.
  */
 int LLInsertAtBeginning(LLElement **first, int key) {
-    // TODO Implementation needed
-    return -1;
+    
+    LLElement * temp;
+    
+    temp=(LLElement*)malloc(sizeof(LLElement));
+    if(temp!=NULL){
+        
+        temp->key=key;
+        temp->next= *first;
+        *first=temp;
+        
+        return 0;
+    }
+    else return -1;
 }
 
 /*
@@ -38,8 +49,14 @@ int LLInsertAtPosition(LLElement **first, int key, int position) {
  * Returns the size of the list.
  */
 int LLSize(LLElement *first) {
-    // TODO Implementation needed
-    return -1;
+    int dimensione=0;
+    
+    while(first!=NULL){
+        first=first->next;
+        dimensione++;
+    }
+        
+    return dimensione;
 }
 
 /*
@@ -49,7 +66,19 @@ int LLSize(LLElement *first) {
  * Returns -1 if there is no key at the specified position
  */ 
 int LLGetKey(LLElement *first, int position, int *key) {
-    // TODO Implementation needed
+    
+    int pos=0;
+    
+    if(first!=NULL){
+        while(pos<position){
+        first=first->next;
+        pos++; 
+    }
+        
+    *key=first->key;
+    
+    return 0;
+    }
     return -1;
 }
 
@@ -72,8 +101,15 @@ int LLFindKey(LLElement *first, int key, int startPosition, int *position) {
  * Returns -1 in csae of empty list.
  */
 int LLRemoveFirst(LLElement **first) {
-    // TODO Implementation needed
-    return -1;
+    LLElement * temp;
+    
+    if(*first!=NULL){
+        temp = (*first)->next;
+        free(*first);
+        *first=temp;
+        return 0;
+    }
+    else return -1;
 }
 
 /*
@@ -83,8 +119,17 @@ int LLRemoveFirst(LLElement **first) {
  * Returns -1 in csae of empty list.
  */
 int LLRemoveLast(LLElement **first) {
-    // TODO Implementation needed
-    return -1;
+    
+    LLElement ** temp;
+    if(*first!=NULL){
+        temp=first;
+        while((*temp)->next!=NULL){
+            temp=&(*temp)->next;
+        }
+        free(*temp);
+        *temp=NULL;
+        return 0;
+    }else return -1;
 }
 
 /*
