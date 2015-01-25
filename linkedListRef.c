@@ -28,8 +28,17 @@ int LLInsertAtBeginning(LLElement **first, int key) {
  * Return -1 if memory allocation fails.
  */
 int LLInsertAtEnd(LLElement **first, int key) {
-    // TODO Implementation needed
-    return -1;
+    LLElement * temp;
+    temp=(LLElement*)malloc(sizeof(LLElement));
+    if(temp!=NULL){
+        while(*first!=NULL){
+            first=&(*first)->next;
+        }
+        temp->key=key;
+        temp->next=NULL;
+        *first=temp;
+        return 0;
+    }else return -1;
 }
 
 /*
@@ -41,8 +50,20 @@ int LLInsertAtEnd(LLElement **first, int key) {
  * Return -1 if memory allocation fails.
  */
 int LLInsertAtPosition(LLElement **first, int key, int position) {
-    // TODO Implementation needed
-    return -1;
+    int i=0;
+    LLElement * temp;
+    temp=(LLElement*)malloc(sizeof(LLElement));
+    if(temp!=NULL){
+        if(position<=(LLSize(*first)) && position>=0){
+            temp->key=key;
+            while(i<position){
+                first= &((*first)->next);
+                i++;
+            }
+            temp->next=*first;
+            *first=temp;
+        }return 0;
+    }else return -1;
 }
 
 /*
@@ -90,8 +111,29 @@ int LLGetKey(LLElement *first, int position, int *key) {
  * Returns -1 if not found. 
  */ 
 int LLFindKey(LLElement *first, int key, int startPosition, int *position) {
-    // TODO Implementation needed
-    return -1;
+    int i=0;
+    if(first!=NULL){
+        while((i<startPosition) && (first!=NULL)){
+
+            first=first->next;
+            i++;
+
+        }   
+        if(first!=NULL){
+            while((first->key!=key)  && (first!=NULL)){
+
+                first=first->next;
+                i++;
+
+            }
+        }
+    }
+    
+    if(first==NULL)return -1;
+    else{
+        *position=i;
+        return 0;
+    }
 }
 
 /*
@@ -120,14 +162,12 @@ int LLRemoveFirst(LLElement **first) {
  */
 int LLRemoveLast(LLElement **first) {
     
-    LLElement ** temp;
     if(*first!=NULL){
-        temp=first;
-        while((*temp)->next!=NULL){
-            temp=&(*temp)->next;
+        while((*first)->next!=NULL){
+            first=&(*first)->next;
         }
-        free(*temp);
-        *temp=NULL;
+        free(*first);
+        *first=NULL;
         return 0;
     }else return -1;
 }
@@ -141,8 +181,21 @@ int LLRemoveLast(LLElement **first) {
  * Returns -1 in case it does not exist any element at the specified position
  */
 int LLRemoveAtPosition(LLElement **first, int position) {
-    // TODO Implementation needed
-    return -1;
+    
+    int i=0;
+    LLElement * riallaccia;
+    if(*first!=NULL){
+        if((LLSize(*first) > position) && (position>=0)){
+            while(i<position){
+                first=&((*first)->next);
+                i++;
+            }   
+            riallaccia=(*first)->next;
+            free(*first);
+            *first=riallaccia;
+            return 0;
+        }
+    }else return -1;
 }
 
 /*
@@ -151,6 +204,14 @@ int LLRemoveAtPosition(LLElement **first, int position) {
  * Return -1 in case of emtpy list. 
  */
 int LLEmptyList(LLElement **first) {
-    // TODO Implementation needed
-    return -1;
+    
+    LLElement * cancella;
+    if(*first!=NULL){
+        while(*first!=NULL){
+
+            cancella=*first;
+            *first=(*first)->next;
+            free(cancella);
+        }return 0;
+    }else return -1;
 }
