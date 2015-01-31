@@ -9,6 +9,7 @@
 int LLInsertAtBeginning(LLElement **first, int key) {
     
     LLElement * temp;
+    int returnValue=-1;
     
     temp=(LLElement*)malloc(sizeof(LLElement));
     if(temp!=NULL){
@@ -17,9 +18,9 @@ int LLInsertAtBeginning(LLElement **first, int key) {
         temp->next= *first;
         *first=temp;
         
-        return 0;
+        returnValue=0;
     }
-    else return -1;
+    return returnValue ;
 }
 
 /*
@@ -28,8 +29,12 @@ int LLInsertAtBeginning(LLElement **first, int key) {
  * Return -1 if memory allocation fails.
  */
 int LLInsertAtEnd(LLElement **first, int key) {
+    
+    int returnValue=-1;
     LLElement * temp;
+    
     temp=(LLElement*)malloc(sizeof(LLElement));
+    
     if(temp!=NULL){
         while(*first!=NULL){
             first=&(*first)->next;
@@ -37,8 +42,9 @@ int LLInsertAtEnd(LLElement **first, int key) {
         temp->key=key;
         temp->next=NULL;
         *first=temp;
-        return 0;
-    }else return -1;
+        returnValue=0;
+        
+    } return returnValue;
 }
 
 /*
@@ -50,9 +56,13 @@ int LLInsertAtEnd(LLElement **first, int key) {
  * Return -1 if memory allocation fails.
  */
 int LLInsertAtPosition(LLElement **first, int key, int position) {
+    int returnValue=-1;
     int i=0;
     LLElement * temp;
+    
+    
     temp=(LLElement*)malloc(sizeof(LLElement));
+    
     if(temp!=NULL){
         if(position<=(LLSize(*first)) && position>=0){
             temp->key=key;
@@ -62,8 +72,8 @@ int LLInsertAtPosition(LLElement **first, int key, int position) {
             }
             temp->next=*first;
             *first=temp;
-        }return 0;
-    }else return -1;
+        }returnValue=0;
+    }return returnValue;
 }
 
 /*
@@ -88,19 +98,22 @@ int LLSize(LLElement *first) {
  */ 
 int LLGetKey(LLElement *first, int position, int *key) {
     
+    int returnValue=-1;
+    
     int pos=0;
     
     if(first!=NULL){
+        
         while(pos<position){
         first=first->next;
         pos++; 
-    }
+        } 
         
-    *key=first->key;
+        *key=first->key;
+        returnValue=0;
     
-    return 0;
     }
-    return -1;
+    return returnValue;
 }
 
 /*
@@ -111,8 +124,12 @@ int LLGetKey(LLElement *first, int position, int *key) {
  * Returns -1 if not found. 
  */ 
 int LLFindKey(LLElement *first, int key, int startPosition, int *position) {
+    
+    int returnValue= -1;
     int i=0;
+    
     if(first!=NULL){
+        
         while((i<startPosition) && (first!=NULL)){
 
             first=first->next;
@@ -129,11 +146,14 @@ int LLFindKey(LLElement *first, int key, int startPosition, int *position) {
         }
     }
     
-    if(first==NULL)return -1;
-    else{
+    if(first!=NULL){
+        
+        returnValue=0;
         *position=i;
-        return 0;
+        
     }
+    
+    return returnValue;
 }
 
 /*
@@ -143,15 +163,17 @@ int LLFindKey(LLElement *first, int key, int startPosition, int *position) {
  * Returns -1 in csae of empty list.
  */
 int LLRemoveFirst(LLElement **first) {
+    
+    int returnValue=-1;
     LLElement * temp;
     
     if(*first!=NULL){
         temp = (*first)->next;
         free(*first);
         *first=temp;
-        return 0;
+        returnValue=0;
     }
-    else return -1;
+    return returnValue;
 }
 
 /*
@@ -162,14 +184,19 @@ int LLRemoveFirst(LLElement **first) {
  */
 int LLRemoveLast(LLElement **first) {
     
+    int returnValue=-1;
+    
     if(*first!=NULL){
+        
         while((*first)->next!=NULL){
             first=&(*first)->next;
         }
+        
         free(*first);
         *first=NULL;
-        return 0;
-    }else return -1;
+        returnValue=0;
+    }
+    return returnValue;
 }
 
 /*
@@ -182,10 +209,14 @@ int LLRemoveLast(LLElement **first) {
  */
 int LLRemoveAtPosition(LLElement **first, int position) {
     
+    int returnValue=-1;
     int i=0;
     LLElement * riallaccia;
+    
     if(*first!=NULL){
+        
         if((LLSize(*first) > position) && (position>=0)){
+            
             while(i<position){
                 first=&((*first)->next);
                 i++;
@@ -193,9 +224,9 @@ int LLRemoveAtPosition(LLElement **first, int position) {
             riallaccia=(*first)->next;
             free(*first);
             *first=riallaccia;
-            return 0;
+            returnValue=0;
         }
-    }else return -1;
+    }return returnValue;
 }
 
 /*
@@ -205,13 +236,17 @@ int LLRemoveAtPosition(LLElement **first, int position) {
  */
 int LLEmptyList(LLElement **first) {
     
+    int returnValue=-1;
     LLElement * cancella;
+  
     if(*first!=NULL){
         while(*first!=NULL){
 
             cancella=*first;
             *first=(*first)->next;
             free(cancella);
-        }return 0;
-    }else return -1;
+        }
+        returnValue=0;
+    }
+    return returnValue;
 }
